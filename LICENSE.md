@@ -1,4 +1,4 @@
-Portions copyright (c) 2016 Florian Ebeling
+Portions copyright (c) 2018 Lingo Live
 
 MIT License
 

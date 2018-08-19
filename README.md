@@ -1,10 +1,8 @@
-# webpack-rails-buildpack
+# polymer-cli-buildpack
 
-A buildpack to support Heroku deployments with [webpack-rails](https://github.com/mipearson/webpack-rails).
+A buildpack to support Heroku deployments with [polymer-cli](https://github.com/Polymer/tools/tree/master/packages/cli).
 
 ## Installation
-
-Note: webpack-rails gem is not longer maintained by its developer.
 
 #### Heroku Dashboard
 
@@ -13,8 +11,8 @@ section Buildpacks by using the URL of this repository, instead of the
 short name of Heroku's own buildpacks. It goes alongside your Ruby and
 Node buildpacks, placed in last position.
 
-After the release of registered buildpacks, it will be available under 
-the name `febeling/webpack-rails`, adhearing to the suggested naming
+After the release of registered buildpacks, it will be available under
+the name `lingolive/polymer-cli-buildpack`, adhearing to the suggested naming
 conventions there.
 
 #### Heroku CLI
@@ -29,25 +27,23 @@ If they are added you should see:
     1. heroku/nodejs
     2. heroku/ruby
 
-To add the Webpack Rails buildpack in the last index, run this command:
+To add the Polymer CLI Rails buildpack in the last index, run this command:
 
-    heroku buildpacks:add --index 3 https://github.com/febeling/webpack-rails-buildpack.git
+    heroku buildpacks:add --index 3 https://github.com/lingolive/polymer-cli-buildpack.git
 
 ## Usage
 
-On deployment, the buildpack runs the build command `bundle exec rake
-webpack:compile`. Under default configuration that will output the
-compiled assets under `public/webpack`.
+On deployment, the buildpack runs the build command `polymer build` or `yarn build`.
 
 ### Package Manager
 
-Heroku supports both NPM and Yarn as Javascript package managers. This buildpack will 
-detect which one to use automatically, based on the persence of a version-lock file. 
+Heroku supports both NPM and Yarn as Javascript package managers. This buildpack will
+detect which one to use automatically, based on the persence of a version-lock file.
 Projects that use yarn have
 a `yarn.lock` file, while those that use npm have a `package-lock.json`
 (or none if using an older version of `npm`).
 
-This buildpack will set the `YARN` environment variable accordingly, which 
+This buildpack will set the `YARN` environment variable accordingly, which
 will make that the effective package manager for Javascript.
 
 ## Contributing
@@ -60,11 +56,12 @@ will make that the effective package manager for Javascript.
 
 ## History
 
-Started on 5 June 2016.
+Forked from https://github.com/febeling/webpack-rails-buildpack on August 18, 2018.
 
 ## Credits
 
-Created by Florian Ebeling.
+polymer-cli-buildpack built and maintained by Lingo Live
+https://github.com/febeling/webpack-rails-buildpack by Florian Ebeling.
 
 ## License
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 # -*- shell-script -*-
 
-# Run the webpack-rails rake task `webpack:compile`.
+# Run the npm/polymer/yarn build command.
 #
-# This compiles assets to `public/webpack` when using default
-# configuration.
+# This compiles assets as outlined in your package.json scripts or
+# as per the default polymer.json settings.
 
 set -o errexit # exit on error
 
@@ -20,6 +20,12 @@ else
   YARN=false
 fi
 
+if [ grep '"build"' < $build_dir/package.json ]; then
+  POLYMER=false
+else
+  POLYMER=true
+fi
+
 detect_package_manager() {
   case $YARN in
     true) echo "yarn";;
@@ -28,7 +34,8 @@ detect_package_manager() {
 }
 
 # This function loads the Heroku settings variables from the files in
-# `env_dir` and sets the up as environment variables.
+# `env_dir` and sets them up as environment variables.
+# POLYMER-CLI-BUILDPACK probable doesn't need this?
 export_env_dir() {
   whitelist_regex=${2:-''}
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
@@ -43,12 +50,6 @@ export_env_dir() {
 
 export_env_dir
 
-echo "-----> gem install bundler"
-gem install bundler --no-document
-
-echo "-----> bundle install"
-bundle install -j4 --deployment
-
 echo "-----> " detect_package_manager " install"
 
 if $YARN; then
@@ -57,8 +58,15 @@ else
   npm install
 fi
 
-echo "-----> bundle exec rake webpack:compile"
-bundle exec rake webpack:compile --trace
+echo "-----> build"
+
+if $POLYMER; then
+  polymer build
+elif $YARN; then
+  yarn build
+else
+  npm run build
+fi
 
 if ! $YARN; then
   echo "-----> npm prune"

@@ -6,8 +6,8 @@
 #
 # `grep` will set the significant exit code accordingly.
 
-echo "webpack-rails"
+echo "polymer.json"
 
 build_dir=$1
 
-grep 'webpack-rails' < $build_dir/Gemfile > /dev/null
+grep '"entrypoint"' < $build_dir/polymer.json > /dev/null
