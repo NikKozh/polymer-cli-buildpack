@@ -20,7 +20,7 @@ else
   YARN=false
 fi
 
-if [ grep '"build"' < $build_dir/package.json ]; then
+if grep '"build"' < $build_dir/package.json; then
   POLYMER=false
 else
   POLYMER=true
@@ -30,6 +30,13 @@ detect_package_manager() {
   case $YARN in
     true) echo "yarn";;
     *) echo "npm";;
+  esac
+}
+
+detect_build_command() {
+  case $POLYMER in
+    true) echo "polymer";;
+    *) echo detect_package_manager;;
   esac
 }
 
@@ -58,7 +65,7 @@ else
   npm install
 fi
 
-echo "-----> build"
+echo "-----> " detect_build_command " build"
 
 if $POLYMER; then
   polymer build
