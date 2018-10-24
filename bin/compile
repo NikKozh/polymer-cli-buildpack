@@ -79,3 +79,5 @@ if ! $YARN; then
   echo "-----> npm prune"
   npm prune
 fi
+
+rm -rf $build_dir/node_modules
