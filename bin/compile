@@ -80,4 +80,5 @@ if ! $YARN; then
   npm prune
 fi
 
+echo "-----> clean up"
 rm -rf $build_dir/node_modules
