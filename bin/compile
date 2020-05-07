@@ -85,6 +85,9 @@ else
   npm run build
 fi
 
+echo "------> harp install"
+npm install harp -g
+
 if ! $YARN; then
   echo "-----> npm prune"
   npm prune
