@@ -57,6 +57,13 @@ export_env_dir() {
 
 export_env_dir
 
+echo "-----> node install"
+NODE_DIR="node-v8.10.0-linux-x64"
+NODE_TAR="$NODE_DIR.tar.gz"
+wget -nv https://nodejs.org/dist/v8.10.0/$NODE_TAR
+tar -zxf $NODE_TAR
+export PATH="$PATH:$build_dir/$NODE_DIR/bin"
+
 echo "-----> " detect_package_manager " install"
 
 if $YARN; then
@@ -64,6 +71,9 @@ if $YARN; then
 else
   npm install
 fi
+
+echo "-----> polymer 3 install"
+npm install -g polymer-cli
 
 echo "-----> " detect_build_command " build"
 
